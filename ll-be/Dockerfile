@@ -12,6 +12,10 @@ COPY uv.lock pyproject.toml ./
 RUN --mount=type=cache,id=s/1564c4e9-2fef-4c94-ab10-f9783fa142c9-uv,target=/root/.cache/uv \
     uv sync --frozen --no-install-project --no-dev
 
+# Install the project itself
+RUN --mount=type=cache,id=s/1564c4e9-2fef-4c94-ab10-f9783fa142c9-uv,target=/root/.cache/uv \
+    uv sync --frozen --no-dev
+
 # Final image
 FROM python:3.13-slim-bookworm
 
