@@ -38,5 +38,3 @@ uploads/*
 
 # Project specific
 .python-version
-uv.lock
-# We keep pyproject.toml as it's needed for uv install
