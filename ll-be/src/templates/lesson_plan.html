@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson Plan: {{ topic }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 40px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #2c3e50;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+        h1 { color: #2c3e50; margin-bottom: 5px; }
+        .meta {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        .section-title {
+            background-color: #ecf0f1;
+            padding: 8px 15px;
+            border-left: 5px solid #3498db;
+            margin-top: 25px;
+            font-weight: bold;
+            color: #2980b9;
+            text-transform: uppercase;
+        }
+        .block {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ddd;
+        }
+        .block-title {
+            font-weight: bold;
+            color: #34495e;
+            font-size: 1.1em;
+        }
+        .duration {
+            font-style: italic;
+            color: #e67e22;
+            font-size: 0.85em;
+        }
+        .detailed-content {
+            background-color: #fdfdfd;
+            border-left: 3px solid #ccc;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            font-size: 0.95em;
+        }
+        .exercise-box {
+            border: 1px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+        .exercise-title {
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 8px;
+        }
+        .solution {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            color: #27ae60;
+            font-size: 0.9em;
+        }
+        .summary {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            margin-top: 30px;
+            font-style: italic;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #bdc3c7;
+        }
+        ul { margin-top: 10px; }
+        li { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ topic }}</h1>
+        <div class="meta">{{ localization.lbl_duration }}: {{ totalDuration }} {{ localization.lbl_minutes }}</div>
+    </div>
+
+    <div class="section-title">{{ localization.lbl_objectives }}</div>
+    <ul>
+        {% for obj in learningObjectives %}
+        <li>{{ obj }}</li>
+        {% endfor %}
+    </ul>
+
+    <div class="section-title">{{ localization.lbl_structure }}</div>
+    {% for block in lessonBlocks %}
+    <div class="block">
+        <span class="block-title">{{ block.title }}</span> 
+        <span class="duration">({{ block.durationMinutes }} {{ localization.lbl_minutes }})</span>
+        
+        {% if block.specific_topic %}
+        <p><strong>{{ localization.lbl_detailed_topic }}</strong> {{ block.specific_topic }}</p>
+        {% endif %}
+        
+        {% if block.specific_goals %}
+        <p><strong>{{ localization.lbl_teaching_guidance }}</strong> {{ block.specific_goals }}</p>
+        {% endif %}
+
+        <p>{{ block.description }}</p>
+        
+        {% if block.detailed_content %}
+        <div class="detailed-content">
+            {{ block.detailed_content }}
+        </div>
+        {% endif %}
+
+        {% if block.reference_links %}
+        <p style="font-size: 0.85em; color: #7f8c8d;">
+            <strong>{{ localization.lbl_references }}</strong> 
+            {% for link in block.reference_links %}
+            <a href="{{ link }}" target="_blank">{{ link }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    {% if exercises %}
+    <div class="section-title">{{ localization.lbl_exercises }}</div>
+    {% for ex in exercises %}
+    <div class="exercise-box">
+        <div class="exercise-title">{{ ex.title }}</div>
+        <div><strong>{{ localization.lbl_problem }}</strong> {{ ex.problem_statement }}</div>
+        <div class="solution"><strong>{{ localization.lbl_guidance }}</strong> {{ ex.solution_or_guidance }}</div>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    {% if miniTest %}
+    <div class="section-title">{{ localization.lbl_minitest }}</div>
+    <ol>
+        {% for q in miniTest %}
+        <li>
+            <strong>{{ localization.lbl_question }}</strong> {{ q.question }}<br>
+            <span style="color: #27ae60; font-size: 0.9em;"><strong>{{ localization.lbl_answer }}</strong> {{ q.correct_answer }}</span>
+        </li>
+        {% endfor %}
+    </ol>
+    {% endif %}
+
+    <div class="section-title">{{ localization.lbl_homework }}</div>
+    <ul>
+        {% for hw in homework %}
+        <li><strong>{{ hw.title }}</strong>: {{ hw.description }}</li>
+        {% endfor %}
+    </ul>
+
+    <div class="section-title">{{ localization.lbl_activities }}</div>
+    {% for activity in activitySuggestions %}
+    <div class="block">
+        <strong>{{ activity.title }}</strong> ({{ localization.lbl_related_to }} {{ activity.relatedTopic }})
+        <p>{{ activity.description }}</p>
+    </div>
+    {% endfor %}
+
+    <div class="summary">
+        <strong>{{ localization.lbl_summary }}</strong> {{ summary }}
+    </div>
+
+    <div class="footer">
+        {{ localization.lbl_footer }}
+    </div>
+</body>
+</html>
