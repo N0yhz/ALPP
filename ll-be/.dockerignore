@@ -1,14 +1,42 @@
-__pycache__
-*.pyc
-*.pyo
-*.pyd
-.venv
-venv
-.git
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Git
+.git/
 .gitignore
-.dockerignore
-.pytest_cache
-.ruff_cache
+
+# Environment variables (Never include secrets in images)
+.env
+
+# Testing and Coverage
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+tests/
+
+# Local data and uploads
 uploads/*
 !uploads/.gitkeep
-.env
+*.db
+*.sqlite
+
+# Project specific
+.python-version
+uv.lock
+# We keep pyproject.toml as it's needed for uv install
