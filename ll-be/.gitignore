@@ -9,6 +9,7 @@ wheels/
 # misc
 .DS_Store
 *.pem
+.geminiignore
 
 # Virtual environments
 .venv

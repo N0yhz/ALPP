@@ -42,8 +42,8 @@ async def login(
         value=token,
         httponly=True,
         max_age=86400, # 24 hours
-        samesite="lax",
-        secure=False # Set to True in production with HTTPS
+        samesite="none",
+        secure=True # Set to True in production with HTTPS
     )
     
     return TokenResponse(access_token=token)
