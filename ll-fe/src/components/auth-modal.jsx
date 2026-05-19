@@ -65,10 +65,10 @@ export function AuthModal({ open, onClose, onLoginSuccess }) {
     setLoading(true)
     try {
       await api.register({ email, password })
-      setTempEmail(email)
-      onClose()
-      setVerifyOpen(true)
-      showToast('OTP code sent to your email.', 'info')
+      // OTP is disabled in backend, users can login immediately
+      showToast('Account created! You can now log in.', 'info')
+      setView('login')
+      setActiveTab('login')
       e.target.reset()
     } catch (err) {
       showToast(err.message, 'error')

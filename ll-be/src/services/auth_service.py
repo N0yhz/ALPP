@@ -46,15 +46,15 @@ class AuthService:
         hashed_password = self._hash_password(password)
         
         if not user:
-            user = User(email=email, hashed_password=hashed_password, verified=False, is_active=True)
+            # TEMPORARY: verified=True to bypass OTP
+            user = User(email=email, hashed_password=hashed_password, verified=True, is_active=True)
             self.user_repo.create(user)
         else:
+            # TEMPORARY: verified=True to bypass OTP
             # If user exists but is not verified or is inactive, update their password and reactivate
-            # We also set verified=False to force them to verify their email again
-            self.user_repo.update(user, {"hashed_password": hashed_password, "is_active": True, "verified": False})
+            self.user_repo.update(user, {"hashed_password": hashed_password, "is_active": True, "verified": True})
         
-        # Pass only the email string to avoid DetachedInstanceError in background tasks
-        background_tasks.add_task(self._generate_and_send_otp, email)
+        # background_tasks.add_task(self._generate_and_send_otp, email)
         return True
 
     def login(self, email: str, password: str) -> Optional[str]:

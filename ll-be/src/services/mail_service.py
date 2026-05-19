@@ -5,7 +5,7 @@ from pathlib import Path
 
 class MailService:
     def __init__(self):
-        # Ensure only one of these is True (Port 587 = STARTTLS, Port 465 = SSL_TLS)
+        # Default to settings, but override based on standard ports for safety
         use_starttls = settings.mail_starttls
         use_ssl = settings.mail_ssl_tls
         
@@ -13,8 +13,11 @@ class MailService:
             use_starttls = True
             use_ssl = False
         elif settings.mail_port == 465:
-            use_starttls = False
             use_ssl = True
+            use_starttls = False
+        
+        # Log port configuration on initialization (useful for Railway logs)
+        print(f"INFO: Initializing MailService on port {settings.mail_port} (STARTTLS: {use_starttls}, SSL: {use_ssl})")
 
         self.conf = ConnectionConfig(
             MAIL_USERNAME=settings.mail_username,

@@ -21,7 +21,7 @@ async def register(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="User already exists, is verified and active"
         )
-    return {"message": "User registered. OTP sent to your email in background."}
+    return {"message": "User registered successfully. You can now log in."}
 
 @router.post("/login", response_model=TokenResponse)
 async def login(
